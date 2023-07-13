@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { Provider as ReduxProvider } from "react-redux";
+import { AddTodo } from "./components/AddTodo";
+import { TodoList } from "./components/TodoList";
+import { store } from "./store";
 
 export function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <ReduxProvider store={store}>
+      <TodoList />
+      <AddTodo />
+    </ReduxProvider>
   );
 }
