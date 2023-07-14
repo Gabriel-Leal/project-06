@@ -6,7 +6,7 @@ export function VideoPlayer() {
         width="100%"
         height="100%"
         controls
-        url="https://www.youtube.com/watch?v=47UCjkuM_ac&ab_channel=SmallAdvantages"
+        url="https://www.youtube.com/watch?v=-SDxID3BS4I&ab_channel=Rocketseat"
       />
     </div>
   );
