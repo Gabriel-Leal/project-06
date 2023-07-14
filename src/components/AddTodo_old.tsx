@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
-import { add } from "../store";
+import { add } from "../store/index_old";
 
 export function AddTodo() {
   const [newTodo, setNewTodo] = useState("");
@@ -11,6 +11,7 @@ export function AddTodo() {
     dispatch(add({ newTodo }));
     setNewTodo("");
   }
+
   return (
     <form onSubmit={handleNewTodo}>
       <input
