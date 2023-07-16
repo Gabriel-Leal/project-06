@@ -1,6 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import { Lesson } from "../Lesson";
 import * as Accordion from "@radix-ui/react-accordion";
+import { useAppSelector } from "../../store";
 
 interface ModuleList {
   moduleIndex: number;
@@ -14,6 +15,10 @@ export function ModuleList({
   amountOfLessons,
 }: ModuleList) {
   let accordionItemId = "item-" + (moduleIndex + 1);
+
+  const lessons = useAppSelector((state) => {
+    return state.player.course.modules[moduleIndex].lessons;
+  });
 
   console.log(accordionItemId);
   return (
@@ -33,9 +38,15 @@ export function ModuleList({
       </Accordion.Trigger>
       <Accordion.Content>
         <nav className="relative flex flex-col gap-4 p-6">
-          <Lesson title="React fundamentals" duration="09:13" />
-          <Lesson title="React fundamentals" duration="09:13" />
-          <Lesson title="React fundamentals" duration="09:13" />
+          {lessons.map((lesson) => {
+            return (
+              <Lesson
+                key={lesson.id}
+                title={lesson.title}
+                duration={lesson.duration}
+              />
+            );
+          })}
         </nav>
       </Accordion.Content>
     </Accordion.Item>

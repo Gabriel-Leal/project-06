@@ -3,8 +3,12 @@ import { ModuleList } from "../../components/ModuleList";
 import { Header } from "../../components/Header";
 import { VideoPlayer } from "../../components/VideoPlayer";
 import * as Accordion from "@radix-ui/react-accordion";
+import { useAppSelector } from "../../store";
 
 export function Player() {
+  const modules = useAppSelector((state) => {
+    return state.player.course.modules;
+  });
   return (
     <div className="h-screen bg-zinc-950 text-zinc-50 flex justify-center items-center">
       <div className="flex w-[1100px] flex-col gap-6">
@@ -26,9 +30,16 @@ export function Player() {
               defaultValue="item-1"
               collapsible
             >
-              <ModuleList moduleIndex={0} title="Redux" amountOfLessons={13} />
-              <ModuleList moduleIndex={1} title="Redux" amountOfLessons={13} />
-              <ModuleList moduleIndex={2} title="Redux" amountOfLessons={13} />
+              {modules.map((module, index) => {
+                return (
+                  <ModuleList
+                    key={module.id}
+                    moduleIndex={index}
+                    title={module.title}
+                    amountOfLessons={module.lessons.length}
+                  />
+                );
+              })}
             </Accordion.Root>
           </aside>
         </main>
