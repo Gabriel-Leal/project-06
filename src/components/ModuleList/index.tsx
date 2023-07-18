@@ -31,7 +31,11 @@ export function ModuleList({
 
   // console.log(accordionItemId);
   return (
-    <Accordion.Item className="AccordionItem group " value={accordionItemId}>
+    <Accordion.Item
+      className="AccordionItem group "
+      defaultChecked={moduleIndex === 0}
+      value={accordionItemId}
+    >
       <Accordion.Trigger className="flex w-full items-center gap-3 bg-zinc-800 p-4">
         <div className="flex h-10 w-10 rounded-full items-center justify-center bg-zinc-900 text-xs">
           {moduleIndex + 1}
