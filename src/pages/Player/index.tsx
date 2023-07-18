@@ -4,22 +4,34 @@ import { Header } from "../../components/Header";
 import { VideoPlayer } from "../../components/VideoPlayer";
 import * as Accordion from "@radix-ui/react-accordion";
 import { useAppSelector } from "../../store";
-import { useCurrentLesson } from "../../store/slices/player";
+import { start, useCurrentLesson } from "../../store/slices/player";
 import { useEffect } from "react";
+import { api } from "../../lib/axios";
+import { useDispatch } from "react-redux";
 
 export function Player() {
+  const dispatch = useDispatch();
+
   const modules = useAppSelector((state) => {
-    return state.player.course.modules;
+    return state.player.course?.modules;
   });
-  const jsonPlay = useAppSelector((state) => {
-    return state.player;
-  });
+  // const jsonPlay = useAppSelector((state) => {
+  //   return state.player;
+  // });
   // console.log(JSON.stringify(jsonPlay, null, 4));
 
   const { currentLesson } = useCurrentLesson();
   useEffect(() => {
-    document.title = `Watching: ${currentLesson.title}`;
+    if (currentLesson) {
+      document.title = `Watching: ${currentLesson.title}`;
+    }
   }, [currentLesson]);
+
+  useEffect(() => {
+    api.get("courses/1").then((response) => {
+      dispatch(start(response.data));
+    });
+  }, []);
   return (
     <div className="h-screen bg-zinc-950 text-zinc-50 flex justify-center items-center">
       <div className="flex w-[1100px] flex-col gap-6">
@@ -41,16 +53,17 @@ export function Player() {
               defaultValue="item-1"
               collapsible
             >
-              {modules.map((module, index) => {
-                return (
-                  <ModuleList
-                    key={module.id}
-                    moduleIndex={index}
-                    title={module.title}
-                    amountOfLessons={module.lessons.length}
-                  />
-                );
-              })}
+              {modules &&
+                modules.map((module, index) => {
+                  return (
+                    <ModuleList
+                      key={module.id}
+                      moduleIndex={index}
+                      title={module.title}
+                      amountOfLessons={module.lessons.length}
+                    />
+                  );
+                })}
             </Accordion.Root>
           </aside>
         </main>
