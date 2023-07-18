@@ -11,6 +11,10 @@ export function Player() {
   const modules = useAppSelector((state) => {
     return state.player.course.modules;
   });
+  const jsonPlay = useAppSelector((state) => {
+    return state.player;
+  });
+  // console.log(JSON.stringify(jsonPlay, null, 4));
 
   const { currentLesson } = useCurrentLesson();
   useEffect(() => {
