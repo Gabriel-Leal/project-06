@@ -1,8 +1,8 @@
 import { ChevronDown } from "lucide-react";
 import { Lesson } from "../Lesson";
 import * as Accordion from "@radix-ui/react-accordion";
-import { useAppSelector } from "../../store";
-import { useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../store";
+// import { useDispatch } from "react-redux";
 import { play } from "../../store/slices/player";
 
 interface ModuleList {
@@ -18,7 +18,7 @@ export function ModuleList({
 }: ModuleList) {
   let accordionItemId = "item-" + (moduleIndex + 1);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { currentModuleIndex, currentLessonIndex } = useAppSelector((state) => {
     const { currentModuleIndex, currentLessonIndex } = state.player;
