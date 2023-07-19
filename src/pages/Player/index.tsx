@@ -3,29 +3,57 @@ import { ModuleList } from "../../components/ModuleList";
 import { Header } from "../../components/Header";
 import { VideoPlayer } from "../../components/VideoPlayer";
 import * as Accordion from "@radix-ui/react-accordion";
-import { useAppDispatch, useAppSelector } from "../../store";
-import { loadCourse, useCurrentLesson } from "../../store/slices/player";
+// import { useAppDispatch, useAppSelector } from "../../store";
+// import { loadCourse, useCurrentLesson } from "../../store/slices/player";
 import { useEffect } from "react";
+import { useCurrentLesson, useStore } from "../../components/zustand-store";
 // import { api } from "../../lib/axios";
 // import { useDispatch } from "react-redux";
 
 export function Player() {
-  const dispatch = useAppDispatch();
-
-  const modules = useAppSelector((state) => {
-    return state.player.course?.modules;
+  const { course, load } = useStore((store) => {
+    return {
+      course: store.course,
+      load: store.load,
+    };
   });
-  // const jsonPlay = useAppSelector((state) => {
-  //   return state.player;
-  // });
-  // console.log(JSON.stringify(jsonPlay, null, 4));
 
   const { currentLesson } = useCurrentLesson();
+
   useEffect(() => {
     if (currentLesson) {
       document.title = `Watching: ${currentLesson.title}`;
     }
   }, [currentLesson]);
+
+  useEffect(() => {
+    load();
+  }, []);
+
+  // console.log(course);
+  //********************************
+  // Using Redux
+  // const dispatch = useAppDispatch();
+
+  // const modules = useAppSelector((state) => {
+  //   return state.player.course?.modules;
+  // });
+
+  // const { currentLesson } = useCurrentLesson();
+  // useEffect(() => {
+  //   if (currentLesson) {
+  //     document.title = `Watching: ${currentLesson.title}`;
+  //   }
+  // }, [currentLesson]);
+
+  // useEffect(() => {
+  //   dispatch(loadCourse());
+  // }, []);
+
+  //********************************
+
+  //********************************
+  // Call an api
 
   // useEffect(() => {
   //   api.get("courses/1").then((response) => {
@@ -33,9 +61,8 @@ export function Player() {
   //   });
   // }, []);
 
-  useEffect(() => {
-    dispatch(loadCourse());
-  }, []);
+  //********************************
+
   return (
     <div className="h-screen bg-zinc-950 text-zinc-50 flex justify-center items-center">
       <div className="flex w-[1100px] flex-col gap-6">
@@ -57,8 +84,21 @@ export function Player() {
               defaultValue="item-1"
               collapsible
             >
-              {modules &&
+              {/* Using Redux */}
+              {/* {modules &&
                 modules.map((module, index) => {
+                  return (
+                    <ModuleList
+                      key={module.id}
+                      moduleIndex={index}
+                      title={module.title}
+                      amountOfLessons={module.lessons.length}
+                    />
+                  );
+                })} */}
+
+              {course?.modules &&
+                course?.modules.map((module, index) => {
                   return (
                     <ModuleList
                       key={module.id}
