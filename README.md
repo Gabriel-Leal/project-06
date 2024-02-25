@@ -1,1 +1,1 @@
-# project-06
+Introducing this Playlist Project! Seamlessly curate and organize your favourite videos into personalized playlists. With user-friendly features, easily create, manage, and share your collections, tailored to your unique preferences. Enjoy a seamless viewing experience with our intuitive interface, designed to elevate your video streaming experience. 
